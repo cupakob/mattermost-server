@@ -430,7 +430,6 @@ func uploadFileMultipartLegacy(c *Context, mr *multipart.Reader,
 		}
 
 		auditRec := c.MakeAuditRecord("uploadFileMultipartLegacy", audit.Fail)
-		defer c.LogAuditRec(auditRec)
 		auditRec.AddMeta("channel_id", channelId)
 		auditRec.AddMeta("client_id", clientId)
 
@@ -455,6 +454,7 @@ func uploadFileMultipartLegacy(c *Context, mr *multipart.Reader,
 		if clientId != "" {
 			resp.ClientIds = append(resp.ClientIds, clientId)
 		}
+		c.LogAuditRec(auditRec)
 	}
 
 	return &resp

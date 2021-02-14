@@ -454,9 +454,9 @@ func BenchmarkS3WriteFile(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		written, err := backend.WriteFile(bytes.NewReader(data), path)
-		defer backend.RemoveFile(path)
 		require.NoError(b, err)
 		require.Equal(b, len(data), int(written))
+		backend.RemoveFile(path)
 	}
 
 	b.StopTimer()

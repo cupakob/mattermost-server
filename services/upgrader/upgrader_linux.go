@@ -309,7 +309,7 @@ func extractBinary(executablePath string, filename string) error {
 				}
 				return err
 			}
-			defer outFile.Close()
+
 			if _, err = io.Copy(outFile, tarReader); err != nil {
 				err2 := os.Remove(executablePath)
 				if err2 != nil {
@@ -332,6 +332,7 @@ func extractBinary(executablePath string, filename string) error {
 			if err != nil {
 				mlog.Warn("Unable to set the correct permissions for the file.", mlog.Err(err))
 			}
+			outFile.Close()
 			break
 		}
 	}

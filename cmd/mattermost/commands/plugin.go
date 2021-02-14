@@ -281,7 +281,7 @@ func pluginAddPublicKeyCmdF(command *cobra.Command, args []string) error {
 		if err != nil {
 			return model.NewAppError("AddPublicKey", "api.plugin.add_public_key.open.app_error", nil, err.Error(), http.StatusInternalServerError)
 		}
-		defer fileReader.Close()
+
 
 		if err := a.AddPublicKey(filename, fileReader); err != nil {
 			CommandPrintErrorln("Unable to add public key: " + pkFile + ". Error: " + err.Error())
@@ -291,6 +291,7 @@ func pluginAddPublicKeyCmdF(command *cobra.Command, args []string) error {
 			auditRec.AddMeta("file", pkFile)
 			a.LogAuditRec(auditRec, nil)
 		}
+		fileReader.Close()
 	}
 	return nil
 }

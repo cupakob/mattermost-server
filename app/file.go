@@ -488,10 +488,10 @@ func (a *App) UploadMultipartFiles(teamID string, channelId string, userID strin
 		}
 
 		// Will be closed after UploadFiles returns
-		defer file.Close()
 
 		files[i] = file
 		filenames[i] = fileHeader.Filename
+		file.Close()
 	}
 
 	return a.UploadFiles(teamID, channelId, userID, files, filenames, clientIds, now)

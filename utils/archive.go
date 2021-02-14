@@ -52,17 +52,17 @@ func UnzipToPath(zipFile io.ReaderAt, size int64, outPath string) ([]string, err
 		if err != nil {
 			return nil, fmt.Errorf("failed to create file: %w", err)
 		}
-		defer outFile.Close()
 
 		file, err := f.Open()
 		if err != nil {
 			return nil, fmt.Errorf("failed to open file: %w", err)
 		}
-		defer file.Close()
 
 		if _, err := io.Copy(outFile, file); err != nil {
 			return nil, fmt.Errorf("failed to write to file: %w", err)
 		}
+		outFile.Close()
+		file.Close()
 	}
 
 	return paths, nil
